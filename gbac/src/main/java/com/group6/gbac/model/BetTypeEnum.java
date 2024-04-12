@@ -1,6 +1,6 @@
 package com.group6.gbac.model;
 
-public enum BetType {
+public enum BetTypeEnum {
     parlay,
     spread,
 

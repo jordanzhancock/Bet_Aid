@@ -1,6 +1,6 @@
-package com.group6.gbac.controller;
+package com.group6.gbac.command;
 
-import com.group6.gbac.model.User;
+import com.group6.gbac.model.GBACUser;
 import com.group6.gbac.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,7 +11,7 @@ public class CreateAcctC implements   Command{
 
     @Override
     public void execute() {
-        User user = new User();
+        GBACUser user = new GBACUser();
 
         userRepository.save(user);
     }

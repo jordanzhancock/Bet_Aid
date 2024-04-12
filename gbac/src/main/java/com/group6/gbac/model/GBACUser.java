@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class User {
+public class GBACUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer userId;
@@ -53,5 +53,10 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return username;
     }
 }

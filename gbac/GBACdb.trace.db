@@ -1,0 +1,36 @@
+2024-04-09 20:37:19.902918-04:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table [*]user (id bigint not null, dob varchar(255), email varchar(255), password varchar(255), username varchar(255), primary key (id))"; expected "identifier"; SQL statement:
+create table user (id bigint not null, dob varchar(255), email varchar(255), password varchar(255), username varchar(255), primary key (id)) [42001-224]
+2024-04-09 20:37:25.271350-04:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table [*]user (id bigint not null, dob varchar(255), email varchar(255), password varchar(255), username varchar(255), primary key (id))"; expected "identifier"; SQL statement:
+create table user (id bigint not null, dob varchar(255), email varchar(255), password varchar(255), username varchar(255), primary key (id)) [42001-224]
+2024-04-09 20:40:44.288560-04:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table [*]user (user_id bigint not null, dob varchar(255), email varchar(255), password varchar(255), username varchar(255), primary key (user_id))"; expected "identifier"; SQL statement:
+create table user (user_id bigint not null, dob varchar(255), email varchar(255), password varchar(255), username varchar(255), primary key (user_id)) [42001-224]
+2024-04-09 20:40:49.882264-04:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table [*]user (user_id bigint not null, dob varchar(255), email varchar(255), password varchar(255), username varchar(255), primary key (user_id))"; expected "identifier"; SQL statement:
+create table user (user_id bigint not null, dob varchar(255), email varchar(255), password varchar(255), username varchar(255), primary key (user_id)) [42001-224]
+2024-04-09 20:47:22.203840-04:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table [*]user (user_id integer not null, dob varchar(255), email varchar(255), password varchar(255), username varchar(255), primary key (user_id))"; expected "identifier"; SQL statement:
+create table user (user_id integer not null, dob varchar(255), email varchar(255), password varchar(255), username varchar(255), primary key (user_id)) [42001-224]
+2024-04-09 20:47:27.890224-04:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table [*]user (user_id integer not null, dob varchar(255), email varchar(255), password varchar(255), username varchar(255), primary key (user_id))"; expected "identifier"; SQL statement:
+create table user (user_id integer not null, dob varchar(255), email varchar(255), password varchar(255), username varchar(255), primary key (user_id)) [42001-224]
+2024-04-10 19:05:18.835774-04:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table bookmaker ([*]key varchar(255) not null, last_update timestamp(6), sport_id varchar(255), title varchar(255), primary key (key))"; expected "identifier"; SQL statement:
+create table bookmaker (key varchar(255) not null, last_update timestamp(6), sport_id varchar(255), title varchar(255), primary key (key)) [42001-224]
+2024-04-10 19:05:18.855045-04:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table market ([*]key varchar(255) not null, book_maker_key varchar(255), last_update timestamp(6), primary key (key))"; expected "identifier"; SQL statement:
+create table market (key varchar(255) not null, book_maker_key varchar(255), last_update timestamp(6), primary key (key)) [42001-224]
+2024-04-10 19:06:09.117727-04:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table bookmaker ([*]key varchar(255) not null, last_update timestamp(6), sport_id varchar(255), title varchar(255), primary key (key))"; expected "identifier"; SQL statement:
+create table bookmaker (key varchar(255) not null, last_update timestamp(6), sport_id varchar(255), title varchar(255), primary key (key)) [42001-224]
+2024-04-10 19:06:09.131942-04:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table market ([*]key varchar(255) not null, book_maker_key varchar(255), last_update timestamp(6), primary key (key))"; expected "identifier"; SQL statement:
+create table market (key varchar(255) not null, book_maker_key varchar(255), last_update timestamp(6), primary key (key)) [42001-224]
+2024-04-10 19:06:16.165066-04:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table bookmaker ([*]key varchar(255) not null, last_update timestamp(6), sport_id varchar(255), title varchar(255), primary key (key))"; expected "identifier"; SQL statement:
+create table bookmaker (key varchar(255) not null, last_update timestamp(6), sport_id varchar(255), title varchar(255), primary key (key)) [42001-224]
+2024-04-10 19:06:16.170394-04:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table market ([*]key varchar(255) not null, book_maker_key varchar(255), last_update timestamp(6), primary key (key))"; expected "identifier"; SQL statement:
+create table market (key varchar(255) not null, book_maker_key varchar(255), last_update timestamp(6), primary key (key)) [42001-224]

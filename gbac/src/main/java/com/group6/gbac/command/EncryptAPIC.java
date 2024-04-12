@@ -1,4 +1,4 @@
-package com.group6.gbac.controller;
+package com.group6.gbac.command;
 
 public class EncryptAPIC implements  Command{
 
