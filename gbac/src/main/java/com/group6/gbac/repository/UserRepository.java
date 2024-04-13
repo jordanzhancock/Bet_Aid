@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface UserRepository extends JpaRepository<GBACUser, Integer> {
-   // List<User> findAll();
+    GBACUser findByUsername(String username);
+    // List<User> findAll();
 }

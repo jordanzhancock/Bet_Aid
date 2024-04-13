@@ -11,15 +11,11 @@ public class Score {
 
     String sport_Id;
 
-    String teamName;
 
-    public String getTeamName() {
-        return teamName;
-    }
 
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
+
+
+
 
     public String getName() {
         return name;

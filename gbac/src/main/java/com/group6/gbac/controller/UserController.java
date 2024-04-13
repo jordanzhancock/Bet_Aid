@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -23,6 +23,16 @@ public class UserController {
     @PostMapping("/user")
     public ResponseEntity<GBACUser> createUser(@RequestBody GBACUser user){
         return new ResponseEntity<>(userRepository.save(user),HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@RequestBody GBACUser user){
+        GBACUser foundUser = userRepository.findByUsername(user.getUsername());
+        if(foundUser != null && foundUser.getPassword().equals( user.getPassword())){
+            return new ResponseEntity<>("userLoggedIn",HttpStatus.OK);
+        }
+        return new ResponseEntity<>("User not found",HttpStatus.BAD_REQUEST);
+
     }
 
 }

@@ -1,19 +1,11 @@
 package com.group6.gbac.controller;
 
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-
-
 import com.group6.gbac.model.Score;
-import com.group6.gbac.model.Sport;
 import com.group6.gbac.repository.SportRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jackson.JsonObjectSerializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -117,16 +106,16 @@ public class SportController {
             "]";
 
     @GetMapping("/scores/nba")
-    public String getNBAScores() {
+    public ResponseEntity<List<Score>> getNBAScores() {
         // Parse the mocked response
-        //List<Score> nbaScores = parseMockedResponse();
-       String obj = mockedScoreResponse;
+        List<Score> nbaScores = parseScore(new JSONObject(mockedScoreResponse));
+        //String obj = mockedScoreResponse;
 
         // Save scores to the database (assuming sportRepository.save(score) is correctly implemented)
 
         // Return the NBA scores
-       // return new ResponseEntity<>(nbaScores, HttpStatus.OK);
-        return obj;
+        return new ResponseEntity<>(nbaScores, HttpStatus.OK);
+       // return onj;
     }
     String mockedScoreResponse = "{\n" +
             "    \"id\": \"e2296d6d1206f8d185466876e2b444ea\",\n" +
@@ -148,12 +137,10 @@ public class SportController {
             "    ]\n" +
             "}";
 
-    private List<Score> parseMockedResponse() {
-
-
+    private List<Score> parseScore(JSONObject jsonObject) {
         // Parse the JSON response and extract scores
         List<Score> scores = new ArrayList<>();
-        JSONObject jsonObject = new JSONObject(mockedScoreResponse);
+        String id = jsonObject.getString("id");
         JSONArray scoresArray = jsonObject.getJSONArray("scores");
         for (int i = 0; i < scoresArray.length(); i++) {
             JSONObject scoreObj = scoresArray.getJSONObject(i);
@@ -162,12 +149,24 @@ public class SportController {
 
             // Create a Score object and add it to the list
             Score scoreModel = new Score();
-            scoreModel.setTeamName(teamName);
+            scoreModel.setName(teamName);
+            scoreModel.setSport_Id(id);
             scoreModel.setScore(String.valueOf(score));
             scores.add(scoreModel);
         }
         return scores;
     }
+
+   // private parseMarket
+//    private bookMaker
+//    private parseOutcome
+    // parseSport
+
+
+
+
+
+
 
 
 }
