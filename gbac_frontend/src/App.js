@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
 import Login from "./pages/Login"
 import HomePage from './pages/HomePage';
+import LiveBets from './pages/LiveBets';
+import BetHistory from './pages/BetHistory';
 
 
 // function App() {
@@ -31,8 +33,11 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />}>
+        <Route path="/" >
           <Route path="homepage" element={<HomePage />} />
+          <Route path="livebets" element={<LiveBets />} />
+          <Route path="login" element={<Login />} />
+          <Route path="bethistory" element={<BetHistory />} />
           {/*<Route path="blogs" element={<Blogs />} />
           <Route path="contact" element={<Contact />} />*/}
           {/* <Route path="*" element={<HomePage />} />  */}
