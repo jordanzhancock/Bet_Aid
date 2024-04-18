@@ -15,6 +15,7 @@ public class GBACUser {
     String email;
     String dob;
 
+
     public Integer getUserId() {
         return userId;
     }

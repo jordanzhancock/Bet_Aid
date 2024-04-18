@@ -1,14 +1,17 @@
 package com.group6.gbac.controller;
 
+import com.group6.gbac.model.Authorization;
 import com.group6.gbac.model.GBACUser;
 import com.group6.gbac.repository.UserRepository;
 import org.apache.catalina.User;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -17,22 +20,45 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
     @GetMapping("/users")
-    public ResponseEntity<List<GBACUser>> getAllUsers(){
-        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<GBACUser>> getAllUsers(@RequestBody String string){
+        JSONObject obj = new JSONObject(string);
+        String accessToken = obj.getString("accessToken");
+        UUID token = UUID.fromString(accessToken);
+        if(Authorization.validateToken(token)) {
+            return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
     @PostMapping("/user")
-    public ResponseEntity<GBACUser> createUser(@RequestBody GBACUser user){
-        return new ResponseEntity<>(userRepository.save(user),HttpStatus.OK);
+    public ResponseEntity<GBACUser> createUser(@RequestBody GBACUser user, UUID accessToken){
+        if(Authorization.validateToken(accessToken)) {
+            return new ResponseEntity<>(userRepository.save(user), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody GBACUser user){
+    public ResponseEntity<Object> loginUser(@RequestBody GBACUser user){
         GBACUser foundUser = userRepository.findByUsername(user.getUsername());
         if(foundUser != null && foundUser.getPassword().equals( user.getPassword())){
-            return new ResponseEntity<>("userLoggedIn",HttpStatus.OK);
+            UUID accessToken = Authorization.createToken();
+            return new ResponseEntity<>(accessToken ,HttpStatus.OK);
         }
         return new ResponseEntity<>("User not found",HttpStatus.BAD_REQUEST);
 
     }
-
+    @PostMapping("/logout")
+    public ResponseEntity<Boolean> logout(@RequestBody String string){
+        System.out.println(string);
+        JSONObject obj = new JSONObject(string);
+        String accessToken = obj.getString("accessToken");
+        UUID token = UUID.fromString(accessToken);
+        if(Authorization.removeToken(token)) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+    }
 }
