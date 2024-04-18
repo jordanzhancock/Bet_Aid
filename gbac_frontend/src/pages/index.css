@@ -1,8 +1,10 @@
-.body{
+body {
+    display: flex;
+    justify-content: center;
     align-items: center;
-    vertical-align: middle;
-
+    height: 100vh; /* Ensure the body takes up the full viewport height */
 }
+
 
 .login-form {
     max-width: 500px;
@@ -14,3 +16,5 @@
   .login-form-button {
     width: 100%;
   }
+
+ 

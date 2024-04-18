@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function BetHistory(){
 
-    const [bets, setBets] = useState(JSON);
-
+    const [bets, setBets] = useState([]);
+   // const navigate = useNavigate();
     useEffect(() => {
         getBet();
         }, []);
@@ -28,7 +29,9 @@ function BetHistory(){
       console.log(error);
     });
 }
-
+    if(!localStorage.getItem("accessToken")){
+        return null;
+    }
     return(
     <>
     <h1>Bet History</h1>

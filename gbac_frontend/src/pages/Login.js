@@ -33,6 +33,8 @@ const handleSubmit = (values) => {
     axios.request(config)
     .then((response) => {
       console.log(JSON.stringify(response.data));
+      localStorage.setItem("accessToken",response.data);
+      console.log("Login AccessToken: " + response.data);
       navigate("/homepage");
     })
     .catch((error) => {

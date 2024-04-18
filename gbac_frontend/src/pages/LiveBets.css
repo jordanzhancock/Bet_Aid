@@ -1,0 +1,54 @@
+.live-bets-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Set the height of the container to 100% of the viewport height */
+}
+
+.sport-card {
+    margin: 10px; /* Add margin to each sport card */
+    padding: 10px; /* Add padding to each sport card */
+    border: 1px solid #ccc; /* Add border to each sport card */
+    border-radius: 5px; /* Add border radius to each sport card */
+    background-color: red; /* Add background color to each sport card */
+}
+
+/* LiveBets.css */
+
+.live-bets-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.sport-card {
+    width: 300px;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #000000;
+    transition: box-shadow 0.3s ease;
+}
+
+.sport-card:hover {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.sport-info {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.sport-title {
+    font-size: 18px;
+}
+
+.sport-details {
+    font-size: 14px;
+
+}
+

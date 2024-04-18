@@ -1,0 +1,8 @@
+game-card,
+.bookmaker,
+.market,
+.outcomes {
+    overflow: auto;
+    max-height: 100px; /* Adjust the max-height as needed */
+    margin-bottom: 10px; /* Add some spacing between cards */
+}
