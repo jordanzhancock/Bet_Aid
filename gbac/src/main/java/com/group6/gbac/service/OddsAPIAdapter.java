@@ -40,7 +40,7 @@ public class OddsAPIAdapter {
         return sports;
     }
 
-    private List<Sport> parseSport(JSONObject jsonObject) {
+    public List<Sport> parseSport(JSONObject jsonObject) {
         List<Sport> sports = new ArrayList<>();
         JSONArray sportArray = jsonObject.getJSONArray("sports");
         for (int i = 0; i < sportArray.length(); i++) {
@@ -57,39 +57,44 @@ public class OddsAPIAdapter {
         return sports;
     }
 
-    public List<Score> parseScore(JSONArray jsonArray) {
+    public List<Score> parseScore(JSONObject jsonObjectSport) {
         List<Score> scores = new ArrayList<>();
-        try {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String sportId = jsonObject.getString("id");
-                // Check if scores is null or not
-                if (!jsonObject.isNull("scores")) {
-                    JSONArray scoreArray = jsonObject.getJSONArray("scores");
-                    for (int j = 0; j < scoreArray.length(); j++) {
-                        JSONObject scoreObj = scoreArray.getJSONObject(j);
-                        String scoreValue = scoreObj.optString("score", "n/a");
-                        String name = scoreObj.optString("name", "n/a");
-                        if (scoreValue != null && name != null) {
-                            Score scoreModel = new Score();
-                            scoreModel.setSport_Id(sportId);
-                            scoreModel.setScore(scoreValue);
-                            scoreModel.setName(name);
-                            scores.add(scoreModel);
-                        } else {
-                            // Log a warning or handle the missing data appropriately
-                            System.out.println("Invalid or missing score data in JSON object.");
-                        }
+        // Check if scores is null or not
+        if (!jsonObjectSport.isNull("scores")) {
+            JSONArray scoreArray = jsonObjectSport.getJSONArray("scores");
+            String sportId = jsonObjectSport.getString("id");
+            try {
+                for (int j = 0; j < scoreArray.length(); j++) {
+                    JSONObject scoreObj = scoreArray.getJSONObject(j);
+                    String scoreValue = scoreObj.optString("score", null);
+                    String name = scoreObj.optString("name", null);
+                    if (scoreValue != null && name != null) {
+                        Score scoreModel = new Score();
+                        scoreModel.setSport_Id(sportId);
+                        scoreModel.setScore(scoreValue);
+                        scoreModel.setName(name);
+                        scores.add(scoreModel);
+                    } else {
+                        // Log a warning or handle the missing data appropriately
+                        System.out.println("Invalid or missing score data in JSON object.");
                     }
                 }
+//                    } else {
+//                        // Handle the case when "scores" is not an array
+//                        System.out.println("Invalid format for scores in JSON object.");
+//                    }
+//                } else {
+//                    // Handle the case when "scores" is null
+//                    System.out.println("Scores are null for the JSON object.");
+//                }
+//            }
+            } catch (JSONException e) {
+                // Log or handle JSON parsing error
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            // Log or handle JSON parsing error
-            e.printStackTrace();
         }
         return scores;
     }
-
 
 
     private List<Market> parseMarket(JSONObject jsonObject){
@@ -187,94 +192,134 @@ public class OddsAPIAdapter {
 
 
     public String mockedScoreResponse = "[\n" +
-            "  {\n" +
-            "    \"id\": \"298f43b988d512301f1283f58465be55\",\n" +
-            "    \"sport_key\": \"basketball_nba\",\n" +
-            "    \"sport_title\": \"NBA\",\n" +
-            "    \"commence_time\": \"2024-04-16T23:40:00Z\",\n" +
-            "    \"completed\": false,\n" +
-            "    \"home_team\": \"New Orleans Pelicans\",\n" +
-            "    \"away_team\": \"Los Angeles Lakers\",\n" +
-            "    \"scores\": null,\n" +
-            "    \"last_update\": null\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"id\": \"c0b61bf137d5bf5aafe6ade79b6800a1\",\n" +
-            "    \"sport_key\": \"basketball_nba\",\n" +
-            "    \"sport_title\": \"NBA\",\n" +
-            "    \"commence_time\": \"2024-04-17T02:00:00Z\",\n" +
-            "    \"completed\": false,\n" +
-            "    \"home_team\": \"Sacramento Kings\",\n" +
-            "    \"away_team\": \"Golden State Warriors\",\n" +
-            "    \"scores\": null,\n" +
-            "    \"last_update\": null\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"id\": \"f13eb486120d8466fc3d004f69280112\",\n" +
-            "    \"sport_key\": \"basketball_nba\",\n" +
-            "    \"sport_title\": \"NBA\",\n" +
-            "    \"commence_time\": \"2024-04-17T23:10:00Z\",\n" +
-            "    \"completed\": false,\n" +
-            "    \"home_team\": \"Philadelphia 76ers\",\n" +
-            "    \"away_team\": \"Miami Heat\",\n" +
-            "    \"scores\": null,\n" +
-            "    \"last_update\": null\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"id\": \"c87df77d60f9110b769f8e3f4fcc83c6\",\n" +
-            "    \"sport_key\": \"basketball_nba\",\n" +
-            "    \"sport_title\": \"NBA\",\n" +
-            "    \"commence_time\": \"2024-04-18T01:40:00Z\",\n" +
-            "    \"completed\": false,\n" +
-            "    \"home_team\": \"Chicago Bulls\",\n" +
-            "    \"away_team\": \"Atlanta Hawks\",\n" +
-            "    \"scores\": null,\n" +
-            "    \"last_update\": null\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"id\": \"0fd3e3ee6cadcae1adf05b0b3fcd1692\",\n" +
-            "    \"sport_key\": \"basketball_nba\",\n" +
-            "    \"sport_title\": \"NBA\",\n" +
-            "    \"commence_time\": \"2024-04-20T18:10:00Z\",\n" +
-            "    \"completed\": false,\n" +
-            "    \"home_team\": \"Cleveland Cavaliers\",\n" +
-            "    \"away_team\": \"Orlando Magic\",\n" +
-            "    \"scores\": null,\n" +
-            "    \"last_update\": null\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"id\": \"58fe88d816c30e8186084fd60e8bc1fe\",\n" +
-            "    \"sport_key\": \"basketball_nba\",\n" +
-            "    \"sport_title\": \"NBA\",\n" +
-            "    \"commence_time\": \"2024-04-20T21:10:00Z\",\n" +
-            "    \"completed\": false,\n" +
-            "    \"home_team\": \"Minnesota Timberwolves\",\n" +
-            "    \"away_team\": \"Phoenix Suns\",\n" +
-            "    \"scores\": null,\n" +
-            "    \"last_update\": null\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"id\": \"7611315f3f28327571d9f58212774a99\",\n" +
-            "    \"sport_key\": \"basketball_nba\",\n" +
-            "    \"sport_title\": \"NBA\",\n" +
-            "    \"commence_time\": \"2024-04-21T18:10:00Z\",\n" +
-            "    \"completed\": false,\n" +
-            "    \"home_team\": \"Milwaukee Bucks\",\n" +
-            "    \"away_team\": \"Indiana Pacers\",\n" +
-            "    \"scores\": null,\n" +
-            "    \"last_update\": null\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"id\": \"7aa3ab404262a55d4c5473372324c52a\",\n" +
-            "    \"sport_key\": \"basketball_nba\",\n" +
-            "    \"sport_title\": \"NBA\",\n" +
-            "    \"commence_time\": \"2024-04-21T21:10:00Z\",\n" +
-            "    \"completed\": false,\n" +
-            "    \"home_team\": \"Los Angeles Clippers\",\n" +
-            "    \"away_team\": \"Dallas Mavericks\",\n" +
-            "    \"scores\": null,\n" +
-            "    \"last_update\": null\n" +
-            "  }\n" +
+            "    {\n" +
+            "        \"id\": \"f13eb486120d8466fc3d004f69280112\",\n" +
+            "        \"sport_key\": \"basketball_nba\",\n" +
+            "        \"sport_title\": \"NBA\",\n" +
+            "        \"commence_time\": \"2024-04-17T23:16:00Z\",\n" +
+            "        \"completed\": true,\n" +
+            "        \"home_team\": \"Philadelphia 76ers\",\n" +
+            "        \"away_team\": \"Miami Heat\",\n" +
+            "        \"scores\": [\n" +
+            "            {\n" +
+            "                \"name\": \"Philadelphia 76ers\",\n" +
+            "                \"score\": \"105\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"name\": \"Miami Heat\",\n" +
+            "                \"score\": \"104\"\n" +
+            "            }\n" +
+            "        ],\n" +
+            "        \"last_update\": \"2024-04-18T09:33:08Z\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "        \"id\": \"c87df77d60f9110b769f8e3f4fcc83c6\",\n" +
+            "        \"sport_key\": \"basketball_nba\",\n" +
+            "        \"sport_title\": \"NBA\",\n" +
+            "        \"commence_time\": \"2024-04-18T01:49:24Z\",\n" +
+            "        \"completed\": true,\n" +
+            "        \"home_team\": \"Chicago Bulls\",\n" +
+            "        \"away_team\": \"Atlanta Hawks\",\n" +
+            "        \"scores\": [\n" +
+            "            {\n" +
+            "                \"name\": \"Chicago Bulls\",\n" +
+            "                \"score\": \"131\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"name\": \"Atlanta Hawks\",\n" +
+            "                \"score\": \"116\"\n" +
+            "            }\n" +
+            "        ],\n" +
+            "        \"last_update\": \"2024-04-18T09:33:08Z\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "        \"id\": \"63ee1b0647d6811b27076ac51f0278c4\",\n" +
+            "        \"sport_key\": \"basketball_nba\",\n" +
+            "        \"sport_title\": \"NBA\",\n" +
+            "        \"commence_time\": \"2024-04-19T23:10:00Z\",\n" +
+            "        \"completed\": false,\n" +
+            "        \"home_team\": \"Miami Heat\",\n" +
+            "        \"away_team\": \"Chicago Bulls\",\n" +
+            "        \"scores\": null,\n" +
+            "        \"last_update\": null\n" +
+            "    },\n" +
+            "    {\n" +
+            "        \"id\": \"fbfa8d9d77468594cb8519b1f5a26d36\",\n" +
+            "        \"sport_key\": \"basketball_nba\",\n" +
+            "        \"sport_title\": \"NBA\",\n" +
+            "        \"commence_time\": \"2024-04-20T01:40:00Z\",\n" +
+            "        \"completed\": false,\n" +
+            "        \"home_team\": \"New Orleans Pelicans\",\n" +
+            "        \"away_team\": \"Sacramento Kings\",\n" +
+            "        \"scores\": null,\n" +
+            "        \"last_update\": null\n" +
+            "    },\n" +
+            "    {\n" +
+            "        \"id\": \"0fd3e3ee6cadcae1adf05b0b3fcd1692\",\n" +
+            "        \"sport_key\": \"basketball_nba\",\n" +
+            "        \"sport_title\": \"NBA\",\n" +
+            "        \"commence_time\": \"2024-04-20T17:10:00Z\",\n" +
+            "        \"completed\": false,\n" +
+            "        \"home_team\": \"Cleveland Cavaliers\",\n" +
+            "        \"away_team\": \"Orlando Magic\",\n" +
+            "        \"scores\": null,\n" +
+            "        \"last_update\": null\n" +
+            "    },\n" +
+            "    {\n" +
+            "        \"id\": \"58fe88d816c30e8186084fd60e8bc1fe\",\n" +
+            "        \"sport_key\": \"basketball_nba\",\n" +
+            "        \"sport_title\": \"NBA\",\n" +
+            "        \"commence_time\": \"2024-04-20T19:30:00Z\",\n" +
+            "        \"completed\": false,\n" +
+            "        \"home_team\": \"Minnesota Timberwolves\",\n" +
+            "        \"away_team\": \"Phoenix Suns\",\n" +
+            "        \"scores\": null,\n" +
+            "        \"last_update\": null\n" +
+            "    },\n" +
+            "    {\n" +
+            "        \"id\": \"745945d0212e97788728dced917cea25\",\n" +
+            "        \"sport_key\": \"basketball_nba\",\n" +
+            "        \"sport_title\": \"NBA\",\n" +
+            "        \"commence_time\": \"2024-04-20T22:10:00Z\",\n" +
+            "        \"completed\": false,\n" +
+            "        \"home_team\": \"New York Knicks\",\n" +
+            "        \"away_team\": \"Philadelphia 76ers\",\n" +
+            "        \"scores\": null,\n" +
+            "        \"last_update\": null\n" +
+            "    },\n" +
+            "    {\n" +
+            "        \"id\": \"ef3b75810319700a88a1be226ccc7b50\",\n" +
+            "        \"sport_key\": \"basketball_nba\",\n" +
+            "        \"sport_title\": \"NBA\",\n" +
+            "        \"commence_time\": \"2024-04-21T00:40:00Z\",\n" +
+            "        \"completed\": false,\n" +
+            "        \"home_team\": \"Denver Nuggets\",\n" +
+            "        \"away_team\": \"Los Angeles Lakers\",\n" +
+            "        \"scores\": null,\n" +
+            "        \"last_update\": null\n" +
+            "    },\n" +
+            "    {\n" +
+            "        \"id\": \"7aa3ab404262a55d4c5473372324c52a\",\n" +
+            "        \"sport_key\": \"basketball_nba\",\n" +
+            "        \"sport_title\": \"NBA\",\n" +
+            "        \"commence_time\": \"2024-04-21T19:40:00Z\",\n" +
+            "        \"completed\": false,\n" +
+            "        \"home_team\": \"Los Angeles Clippers\",\n" +
+            "        \"away_team\": \"Dallas Mavericks\",\n" +
+            "        \"scores\": null,\n" +
+            "        \"last_update\": null\n" +
+            "    },\n" +
+            "    {\n" +
+            "        \"id\": \"7611315f3f28327571d9f58212774a99\",\n" +
+            "        \"sport_key\": \"basketball_nba\",\n" +
+            "        \"sport_title\": \"NBA\",\n" +
+            "        \"commence_time\": \"2024-04-21T23:10:00Z\",\n" +
+            "        \"completed\": false,\n" +
+            "        \"home_team\": \"Milwaukee Bucks\",\n" +
+            "        \"away_team\": \"Indiana Pacers\",\n" +
+            "        \"scores\": null,\n" +
+            "        \"last_update\": null\n" +
+            "    }\n" +
             "]";
 
 

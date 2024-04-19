@@ -3,6 +3,7 @@ package com.group6.gbac.controller;
 import com.group6.gbac.model.Authorization;
 import com.group6.gbac.model.GBACUser;
 import com.group6.gbac.repository.UserRepository;
+import com.group6.gbac.service.EmailService;
 import org.apache.catalina.User;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,18 @@ public class UserController {
         }else{
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
+    }
+    @Autowired
+    private EmailService emailService;
+
+    @PostMapping("/forgot-password")
+    public String forgotPassword(@RequestBody String email) {
+        // Logic to generate new password
+        String newPassword = "generatedPassword";
+
+        // Send email
+        emailService.sendForgotPasswordEmail(email, newPassword);
+
+        return "Password reset instructions sent to your email.";
     }
 }
